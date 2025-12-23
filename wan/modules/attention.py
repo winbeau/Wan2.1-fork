@@ -345,6 +345,11 @@ def attention_with_weights(
 
     bsz, _n, lq, lk = attn_scores.shape
 
+    if k_lens is not None:
+        k_lens = k_lens.to(device=attn_scores.device)
+    if q_lens is not None:
+        q_lens = q_lens.to(device=attn_scores.device)
+
     # Apply key padding mask if provided (k_lens is [B]).
     q_valid = None
     if k_lens is not None:
