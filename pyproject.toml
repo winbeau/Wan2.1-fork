@@ -28,7 +28,8 @@ dependencies = [
     "imageio-ffmpeg",
     "flash_attn",
     "gradio>=5.0.0",
-    "numpy>=1.23.5,<2"
+    "numpy>=1.23.5,<2",
+    "huggingface-hub[cli]>=0.36.0",
 ]
 
 [project.optional-dependencies]

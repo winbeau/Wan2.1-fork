@@ -230,6 +230,7 @@ Requires-Dist: imageio-ffmpeg
 Requires-Dist: flash_attn
 Requires-Dist: gradio>=5.0.0
 Requires-Dist: numpy<2,>=1.23.5
+Requires-Dist: huggingface-hub[cli]>=0.36.0
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: black; extra == "dev"
