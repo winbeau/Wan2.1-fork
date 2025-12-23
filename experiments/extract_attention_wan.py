@@ -18,25 +18,6 @@ import sys
 
 import torch
 
-# Patch attention module before importing wan
-def patch_attention_module():
-    """Replace wan.modules.attention with capture-enabled version."""
-    import capture_attention
-    import wan.modules.attention as orig_attn
-
-    # Copy capture-enabled functions
-    orig_attn.flash_attention = capture_attention.flash_attention
-    orig_attn.attention = capture_attention.attention
-    orig_attn.attention_with_weights = capture_attention.attention_with_weights
-    orig_attn.ATTENTION_WEIGHT_CAPTURE = capture_attention.ATTENTION_WEIGHT_CAPTURE
-    orig_attn.AttentionWeightCapture = capture_attention.AttentionWeightCapture
-
-    # Also patch the model module's import
-    import wan.modules.model as model_module
-    model_module.flash_attention = capture_attention.attention  # Use attention which has capture logic
-
-    return capture_attention.ATTENTION_WEIGHT_CAPTURE
-
 
 def main():
     args = parse_args()
@@ -46,7 +27,8 @@ def main():
         sys.exit(1)
 
     # Patch attention before importing wan
-    ATTENTION_WEIGHT_CAPTURE = patch_attention_module()
+    from wan.modules.attention import ATTENTION_WEIGHT_CAPTURE
+
 
     # Now import wan
     import wan
