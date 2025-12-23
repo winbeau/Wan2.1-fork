@@ -11,7 +11,7 @@ authors = [
 ]
 license = { file = "LICENSE.txt" }
 readme = "README.md"
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.10,<3.11"
 dependencies = [
     "torch>=2.4.0",
     "torchvision>=0.19.0",
@@ -64,4 +64,30 @@ profile = "black"
 [tool.mypy]
 strict = true
 
+[tool.uv]
+# 1. 限制只在 Linux x86_64 下解析，避免 ARM 架构报错
+environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+# 2. 定义 PyTorch 源，但标记为 explicit（显式），不让它自动干扰其他包
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+# 3. 定义 Nvidia 源
+[[tool.uv.index]]
+name = "nvidia"
+url = "https://pypi.ngc.nvidia.com"
+
+# 4. 【关键】强制指定 torch 相关包走 pytorch 源
+[tool.uv.sources]
+torch = { index = "pytorch" }
+torchvision = { index = "pytorch" }
+torchaudio = { index = "pytorch" }  # <-- 加上这一行
+clip = { git = "https://github.com/openai/CLIP.git" }
+
+[tool.hatch.build.targets.wheel]
+only-include = ["."]
 
