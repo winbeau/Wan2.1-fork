@@ -360,12 +360,20 @@ wheels = [
 [[package]]
 name = "flash-attn"
 version = "2.8.3"
-source = { registry = "https://pypi.org/simple" }
+source = { url = "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl" }
 dependencies = [
     { name = "einops", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
     { name = "torch", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3b/b2/8d76c41ad7974ee264754709c22963447f7f8134613fd9ce80984ed0dab7/flash_attn-2.8.3.tar.gz", hash = "sha256:1e71dd64a9e0280e0447b8a0c2541bad4bf6ac65bdeaa2f90e51a9e57de0370d", size = 8447812, upload-time = "2025-08-15T08:28:12.911Z" }
+wheels = [
+    { url = "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl", hash = "sha256:f6e2c4172c98a8225b45424dd87ab43224df878cfb4148d679e2c98a7a7dd24d" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "einops" },
+    { name = "torch" },
+]
 
 [[package]]
 name = "frozenlist"
@@ -1492,7 +1500,7 @@ requires-dist = [
     { name = "diffusers", specifier = ">=0.31.0" },
     { name = "easydict" },
     { name = "flake8", marker = "extra == 'dev'" },
-    { name = "flash-attn" },
+    { name = "flash-attn", url = "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl" },
     { name = "ftfy" },
     { name = "gradio", specifier = ">=5.0.0" },
     { name = "huggingface-hub", extras = ["cli"], specifier = ">=0.36.0" },

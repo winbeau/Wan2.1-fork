@@ -26,13 +26,19 @@ def main():
         print("Error: CUDA is required")
         sys.exit(1)
 
-    # Patch attention before importing wan
+    # Load attention capture helper before importing wan
     from wan.modules.attention import ATTENTION_WEIGHT_CAPTURE
 
 
     # Now import wan
     import wan
     from wan.configs import WAN_CONFIGS, SIZE_CONFIGS
+    from wan.modules import attention as attention_mod
+    from wan.modules import model as model_mod
+
+    # Patch Wan model to use the capture-aware attention path
+    if model_mod.flash_attention is attention_mod.flash_attention:
+        model_mod.flash_attention = attention_mod.attention
 
     device = torch.device(f"cuda:{args.gpu_id}")
     torch.cuda.set_device(device)
