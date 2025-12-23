@@ -1,0 +1,65 @@
+Skipping import of cpp extensions due to incompatible torch version 2.6.0+cu124 for torchao version 0.14.1             Please see https://github.com/pytorch/ao/issues/2919 for more info
+Using device: cuda:0
+GPU: NVIDIA L40
+Initializing inference pipeline...
+KV inference with 3 frames per block
+Loading checkpoint from checkpoints/self_forcing_dmd.pt
+
+Num frames: 21
+Layer indices: [0, 4]
+Prompt: A majestic eagle soaring through a cloudy sky, cinematic lighting
+Full attention mode: True
+
+============================================================
+完整注意力模式：计算 N帧×N帧 注意力矩阵
+提取论文 Figure 4 所需的子矩阵：
+  Query: 最后 3 帧 (帧 18-20)
+  Key: 前 18 帧 (帧 0-17)
+============================================================
+
+执行推理...
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+current_timestep: 1000.0
+current_timestep: 937.5
+current_timestep: 833.3333129882812
+current_timestep: 625.0
+Output is tuple with 2 elements, using latent
+Output latent shape: torch.Size([1, 21, 16, 60, 104])
+
+计算完整的 N帧×N帧 注意力矩阵...
+Denoised latent shape: torch.Size([1, 32760, 1536])
+Total frames: 21, Tokens/frame: 1560
+Total tokens: 32760
+
+Processing layer 0...
+Traceback (most recent call last):
+  File "/workspace/Self-Forcing-fork/run_extraction_figure4.py", line 504, in <module>
+    main()
+  File "/workspace/Self-Forcing-fork/run_extraction_figure4.py", line 113, in main
+    final_attentions = compute_attention_from_denoised(
+  File "/workspace/Self-Forcing-fork/run_extraction_figure4.py", line 444, in compute_attention_from_denoised
+    attn_logits = torch.matmul(q.float(), k.float().transpose(-2, -1)) * scale
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 47.98 GiB. GPU 0 has a total capacity of 44.39 GiB of which 23.14 GiB is free. Process 150600 has 21.23 GiB memory in use. Of the allocated memory 20.32 GiB is allocated by PyTorch, and 418.98 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
